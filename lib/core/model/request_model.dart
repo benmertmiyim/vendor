@@ -1,35 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-enum Status{
-  completed,
-  canceled,
-  approval,
-  processing,
-}
-statusConvert(String status){
-  switch(status){
-    case "completed":
-      return Status.completed;
-    case "canceled":
-      return Status.canceled;
-    case "approval":
-      return Status.approval;
-    case "processing":
-      return Status.processing;
-  }
-}
-
-statusConvert2(Status status){
-  switch(status){
-    case Status.completed:
-      return "completed";
-    case Status.canceled:
-      return "canceled";
-    case Status.approval:
-      return "approval";
-    case Status.processing:
-      return "processing";
-  }
-}
+import 'package:vendor/core/model/enums.dart';
 
 class RequestModel {
   final String vendorId;
@@ -76,7 +46,7 @@ class RequestModel {
       startPrice: json["startPrice"].toDouble(),
       requestTime: json["requestTime"] as Timestamp,
       responseTime: json["responseTime"] as Timestamp,
-      status:  statusConvert(json["status"]),
+      status: statusConvert(json["status"]),
     );
   }
 

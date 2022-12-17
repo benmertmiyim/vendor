@@ -1,8 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/core/base/park_base.dart';
+import 'package:vendor/core/model/enums.dart';
 import 'package:vendor/core/model/request_model.dart';
 
 class ParkService implements ParkBase {
@@ -14,84 +14,89 @@ class ParkService implements ParkBase {
     try {
       User? user = firebaseAuth.currentUser;
       if (user != null) {
-        CollectionReference customer =
-        firebaseFirestore.collection("customers");
-        DocumentSnapshot documentSnapshotCustomer = await customer.doc(uid).get();
-
-        CollectionReference vendor = firebaseFirestore.collection("vendors");
-        DocumentSnapshot documentSnapshotVendor = await vendor.doc(user.uid).get();
+        DocumentSnapshot documentSnapshotCustomer = await firebaseFirestore.collection("customers").doc(uid).get();
+        DocumentSnapshot documentSnapshotVendor = await firebaseFirestore.collection("vendors").doc(user.uid).get();
 
         if (documentSnapshotCustomer.exists && documentSnapshotVendor.exists) {
           Map mapCustomer = documentSnapshotCustomer.data() as Map;
           Map mapVendor = documentSnapshotVendor.data() as Map;
 
-          CollectionReference customerActive = firebaseFirestore.collection("customers/$uid/active_park");
-          QuerySnapshot customerActiveQuery = await customerActive.get();
+          CollectionReference customerHistoryCollection = firebaseFirestore.collection("customers/$uid/history");
+          CollectionReference vendorHistoryCollection = firebaseFirestore.collection("vendors/${user.uid}/history");
+          QuerySnapshot customerApprovalQuery = await customerHistoryCollection.where("status",isEqualTo: "approval").get();
+          QuerySnapshot customerProcessingQuery = await customerHistoryCollection.where("status",isEqualTo: "processing").get();
 
-          if(customerActiveQuery.size == 0){
-            CollectionReference vendor = firebaseFirestore.collection("vendors/${user.uid}/awaiting_approval");
-            CollectionReference customer = firebaseFirestore.collection("customers/$uid/awaiting_approval");
-            QuerySnapshot customerQuery = await customer.get();
-
-            if (customerQuery.size == 0){
-              var res =await vendor.add({
-                "request_time": Timestamp.now(),
+          if(customerProcessingQuery.size == 0){
+            if(customerApprovalQuery.size == 0){
+              var res = await vendorHistoryCollection.add({
+                "requestTime": Timestamp.now(),
                 "uid": uid,
-                "customer_image": mapCustomer["image_url"],
-                "customer_name": mapCustomer["name_surname"],
-                "hourly_price": mapVendor["hourly_price"],
-                "start_price": mapVendor["start_price"],
-                "vendor_id":user.uid,
-                "park_name":mapVendor["park_name"],
+                "customerImage": mapCustomer["image_url"],
+                "customerName": mapCustomer["name_surname"],
+                "hourlyPrice": mapVendor["hourly_price"],
+                "startPrice": mapVendor["start_price"],
+                "vendorId":user.uid,
+                "requestId":"000000",
+                "parkName":mapVendor["park_name"],
                 "status":"approval",
               });
-              await customer.doc(res.id).set({
-                "request_time": Timestamp.now(),
+              await vendorHistoryCollection.doc(res.id).update({"requestId":res.id});
+              await customerHistoryCollection.doc(res.id).set({
+                "requestTime": Timestamp.now(),
                 "uid": uid,
-                "customer_image": mapCustomer["image_url"],
-                "customer_name": mapCustomer["name_surname"],
-                "hourly_price": mapVendor["hourly_price"],
-                "start_price": mapVendor["start_price"],
-                "vendor_id":user.uid,
-                "park_name":mapVendor["park_name"],
+                "requestId":res.id,
+                "customerImage": mapCustomer["image_url"],
+                "customerName": mapCustomer["name_surname"],
+                "hourlyPrice": mapVendor["hourly_price"],
+                "startPrice": mapVendor["start_price"],
+                "vendorId":user.uid,
+                "parkName":mapVendor["park_name"],
                 "status":"approval",
               });
+              return "Request sent.";
             }else{
-              return "This user already has a pending request";
+              return "Bekleyen talep mevcut";
             }
           }
           else{
-            Map<String, dynamic> map = customerActiveQuery.docs[0].data() as Map<String, dynamic>;
+            Map<String, dynamic> map = customerProcessingQuery.docs[0].data() as Map<String, dynamic>;
             RequestModel requestModel = RequestModel.fromJson(map);
             if(requestModel.vendorId == user.uid){
-              DocumentReference customerApproval = firebaseFirestore.collection("customers/${requestModel.uid}/active_park").doc(requestModel.requestId);
-              DocumentReference vendorApproval = firebaseFirestore.collection("vendors/${user.uid}/active_park").doc(requestModel.requestId);
-              await customerApproval.delete();
-              await vendorApproval.delete();
-              requestModel.status = Status.completed;
               requestModel.closedTime = Timestamp.now();
               DateTime dateTime1 = (requestModel.requestTime).toDate();
               DateTime dateTime2 = (requestModel.closedTime!).toDate();
               requestModel.totalTime = dateTime1.difference(dateTime2).inMinutes * -1;
               requestModel.totalPrice = requestModel.startPrice + ((requestModel.hourlyPrice/60) * requestModel.totalTime!);
-              CollectionReference customerCollectionReference = firebaseFirestore.collection("customers/${requestModel.uid}/history");
-              await customerCollectionReference.doc(requestModel.requestId).set(requestModel.toJsonForClose());
-              CollectionReference vendorCollectionReference = firebaseFirestore.collection("vendors/${user.uid}/history");
-              await vendorCollectionReference.doc(requestModel.requestId).set(requestModel.toJsonForClose());
+              requestModel.status = Status.payment;
+              await customerHistoryCollection.doc(requestModel.requestId).update(requestModel.toJsonForClose());
+              requestModel.status = Status.completed;
+              await vendorHistoryCollection.doc(requestModel.requestId).update(requestModel.toJsonForClose());
+              return "Process closed...";
             }else{
               return "This user is in another parking lot.";
             }
           }
-          return true;
+        }else{
+          return "Customer not found !";
         }
+      }else{
+        return "Vendor not found !";
       }
-      return false;
     } catch (e) {
       debugPrint(
         "sendRequest - Exception - sendRequest : ${e.toString()}",
       );
-      return false;
+      return "Something went wrong";
     }
 
   }
+
+  @override
+  Stream<QuerySnapshot<Object?>> getParks() {
+    return firebaseFirestore
+        .collection(
+        "vendors/${firebaseAuth.currentUser!.uid}/history").orderBy("requestTime", descending: true)
+        .snapshots();
+  }
+
 }

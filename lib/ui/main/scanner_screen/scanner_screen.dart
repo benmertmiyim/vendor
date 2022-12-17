@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:vendor/core/view/park_view.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
     super.reassemble();
     if (Platform.isAndroid) {
       controller!.pauseCamera();
-    }else if (Platform.isIOS){
+    } else if (Platform.isIOS) {
       controller!.resumeCamera();
     }
   }
@@ -42,13 +43,11 @@ class _ScannerScreenState extends State<ScannerScreen> {
               borderLength: 30,
               borderWidth: 10,
               cutOutSize: scanArea,),
-          onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
         ),
         Center(
           child: Consumer<ParkView>(
             builder: (x, view, y) {
               if (view.parkProcess == ParkProcess.busy) {
-                controller?.pauseCamera();
                 return Wrap(
                   children: [
                     Card(
@@ -65,7 +64,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
                   ],
                 );
               } else {
-                controller?.resumeCamera();
                 return Container();
               }
             },
@@ -80,32 +78,21 @@ class _ScannerScreenState extends State<ScannerScreen> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) async {
+      controller.pauseCamera();
       var result = await parkView!.sendRequest(scanData.code!);
       String message;
+      message = result as String;
 
-      if (result is bool) {
-        if(result){
-          message = "Request sent.";
-        }else{
-          message = "Request could not be sent.";
-        }
-      } else {
-        message = result as String;
-      }
+      await Alert(
+        context: context,
+        title: "Result",
+        desc: message,
+      ).show();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+      controller.resumeCamera();
     });
-  }
-
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    debugPrint('${DateTime.now().toIso8601String()}_onPermissionSet $p');
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
-    }
+    controller.pauseCamera();
+    controller.resumeCamera();
   }
 
   @override

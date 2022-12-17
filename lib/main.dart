@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:vendor/const.dart';
 import 'package:vendor/core/view/auth_view.dart';
+import 'package:vendor/core/view/notification_view.dart';
 import 'package:vendor/core/view/park_view.dart';
 import 'package:vendor/firebase_options.dart';
 import 'package:vendor/locator.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ParkView(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NotificationView(),
         ),
       ],
       child: MaterialApp(

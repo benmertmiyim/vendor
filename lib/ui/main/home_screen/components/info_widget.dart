@@ -28,7 +28,7 @@ class InfoWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(number.toString(),style: const TextStyle(fontSize: 32,fontWeight: FontWeight.bold),),
+              Text(number.toStringAsFixed(0),style: const TextStyle(fontSize: 32,fontWeight: FontWeight.bold),),
               Text(description,textAlign: TextAlign.center,maxLines: 2,style: const TextStyle(fontSize: 16,)),
             ],
           ),

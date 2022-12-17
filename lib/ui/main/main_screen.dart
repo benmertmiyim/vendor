@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:vendor/const.dart';
 import 'package:vendor/ui/main/home_screen/home_screen.dart';
+import 'package:vendor/ui/main/notification_screen/notification_screen.dart';
 import 'package:vendor/ui/main/other_screen/other_screen.dart';
 import 'package:vendor/ui/main/scanner_screen/scanner_screen.dart';
 
@@ -34,11 +35,11 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(
             icon: const Icon(LineIcons.bell),
             onPressed: () {
-              /*Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>  const NotificationScreen(),),
-              );*/
+              );
             },
           ),
         ],

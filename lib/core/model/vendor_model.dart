@@ -1,16 +1,21 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 class VendorModel {
   final String vendorID;
   final String email;
   final String parkName;
   final String managerName;
+  final String iban;
+  final String vkn;
+  final String phone;
   bool active;
   List<String>? imgList;
   double? longitude;
   double? latitude;
-  String? description;
   double rating;
+  double startPrice;
+  double hourlyPrice;
+  double accessibility;
+  double security;
+  double serviceQuality;
 
   VendorModel({
     required this.vendorID,
@@ -18,15 +23,22 @@ class VendorModel {
     required this.parkName,
     required this.managerName,
     required this.active,
-    this.rating = 5,
+    required this.iban,
+    required this.vkn,
+    required this.phone,
+    required this.rating,
+    required this.accessibility,
+    required this.security,
+    required this.serviceQuality,
     this.imgList,
     this.latitude,
     this.longitude,
-    this.description,
+    required this.hourlyPrice,
+    required this.startPrice,
   });
 
   @override
   String toString() {
-    return 'VendorModel{vendorID: $vendorID, email: $email, parkName: $parkName, managerName: $managerName, active: $active, imgList: $imgList, longitude: $longitude, latitude: $latitude, description: $description, rating: $rating}';
+    return 'VendorModel{vendorID: $vendorID, email: $email, parkName: $parkName, managerName: $managerName, iban: $iban, vkn: $vkn, phone: $phone, active: $active, imgList: $imgList, longitude: $longitude, latitude: $latitude, rating: $rating, startPrice: $startPrice, hourlyPrice: $hourlyPrice}';
   }
 }
