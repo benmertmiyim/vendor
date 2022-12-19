@@ -16,9 +16,9 @@ class CommentsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: authView.authProcess == AuthProcess.idle
-          ? (authView.ratingList!.isNotEmpty
+          ? (authView.ratingList.isNotEmpty
           ? ListView.builder(
-          itemCount: authView.ratingList!.length,
+          itemCount: authView.ratingList.length,
           itemBuilder: (BuildContext context, int i) {
             return CommentWidget(rateModel: authView.ratingList![i]);
           })

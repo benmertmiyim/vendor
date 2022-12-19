@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             InfoWidget(
               color: Colors.blue,
-              number: parkView.parkHistory.length.toDouble(),
+              number: parkView.parkHistory.length.toStringAsFixed(0),
               description: "Today Total Parks",
               page: DetailScreen(
                 data: parkView.parkHistory,
@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             InfoWidget(
               color: Colors.green,
-              number: parkView.activePark.length.toDouble(),
+              number: parkView.activePark.length.toStringAsFixed(0),
               description: "Active Parks",
               page: DetailScreen(
                 data: parkView.activePark,
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             InfoWidget(
               color: Colors.orange,
-              number: parkView.approvalPark.length.toDouble(),
+              number: parkView.approvalPark.length.toStringAsFixed(0),
               description: "Awaiting Approval",
               page: DetailScreen(
                 data: parkView.approvalPark,
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             InfoWidget(
               color: Colors.red,
-              number: parkView.canceledPark.length.toDouble(),
+              number: parkView.canceledPark.length.toStringAsFixed(0),
               description: "Today Rejected Parks",
               page: DetailScreen(
                 data: parkView.canceledPark,
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             InfoWidget(
               color: Colors.yellow,
-              number: parkView.totalEarnings,
+              number: "${parkView.totalEarnings.toStringAsFixed(0)} ₺",
               description: "Today's Earnings",
               page: DetailScreen(
                 data: parkView.parkHistory,

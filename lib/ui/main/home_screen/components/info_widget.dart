@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class InfoWidget extends StatelessWidget {
   final Color color;
-  final double number;
+  final String number;
   final String description;
   final Widget page;
 
@@ -28,7 +28,7 @@ class InfoWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(number.toStringAsFixed(0),style: const TextStyle(fontSize: 32,fontWeight: FontWeight.bold),),
+              Text(number,style: const TextStyle(fontSize: 32,fontWeight: FontWeight.bold),),
               Text(description,textAlign: TextAlign.center,maxLines: 2,style: const TextStyle(fontSize: 16,)),
             ],
           ),

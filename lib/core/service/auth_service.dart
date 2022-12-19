@@ -115,27 +115,12 @@ class AuthService implements AuthBase {
   }
 
   @override
-  Future<List<RateModel>?> getComments() async {
-    try {
-      QuerySnapshot querySnapshot = await firebaseFirestore
-          .collection(
-          "vendors/${firebaseAuth.currentUser!.uid}/ratings")
-          .orderBy("commentDate", descending: true)
-          .get();
-      List<RateModel> list = [];
-      debugPrint(querySnapshot.docs[0].data().toString());
-      for (int i = 0; i < querySnapshot.size; i++) {
-        Map<String, dynamic> rating =
-        querySnapshot.docs[i].data() as Map<String, dynamic>;
-        list.add(RateModel.fromJson(rating));
-      }
-      return list;
-    } catch (e) {
-      debugPrint(
-        "NotificationService - Exception - getComments : ${e.toString()}",
-      );
-      return null;
-    }
+  Stream<QuerySnapshot<Object?>> getComments() {
+    return firebaseFirestore
+      .collection(
+      "vendors/${firebaseAuth.currentUser!.uid}/ratings").orderBy("commentDate", descending: true)
+      .snapshots();
+
   }
 
 

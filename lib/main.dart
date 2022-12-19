@@ -19,7 +19,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(const MyApp(key: Key("asdasd"),),);
 }
 
 class MyApp extends StatelessWidget {

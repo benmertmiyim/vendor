@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "180183630226",
+    "project_id": "otoparkbul-yu",
+    "storage_bucket": "otoparkbul-yu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180183630226:android:576c70e7956c7974b9c14b",
+        "android_client_info": {
+          "package_name": "app.otoparkbul.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180183630226-vrmsmrp8ti8j9qbj96qmvl0df602o1uh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.otoparkbul.customer",
+            "certificate_hash": "bc1d6454848f62719e07c15dde3f523a71e3c823"
+          }
+        },
+        {
+          "client_id": "180183630226-1fd2f13sbja7itr7io1m2adfpjdakd71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBURUn7TucPqrkUx2QWBJAd62b-lzMLbO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180183630226-1fd2f13sbja7itr7io1m2adfpjdakd71.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "180183630226-5pn9opqgmg4njr966g3ka69jo7irr0pe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.otoparkbul.vendor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180183630226:android:2e82cf41f798442eb9c14b",
+        "android_client_info": {
+          "package_name": "app.otoparkbul.vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180183630226-1fd2f13sbja7itr7io1m2adfpjdakd71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBURUn7TucPqrkUx2QWBJAd62b-lzMLbO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180183630226-1fd2f13sbja7itr7io1m2adfpjdakd71.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "180183630226-5pn9opqgmg4njr966g3ka69jo7irr0pe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.otoparkbul.vendor"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

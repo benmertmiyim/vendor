@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:vendor/const.dart';
 
@@ -42,16 +43,15 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Container(),
             Column(
-              children: const [
-                Text(
-                  title,
-                  style:
-                  TextStyle(fontWeight: FontWeight.bold,fontSize: 32),
+              children:  [
+                SvgPicture.asset(
+                  "assets/images/parkin_logo.svg",
+                  width: 250,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                CircularProgressIndicator(),
+                const CircularProgressIndicator(),
               ],
             ),
             Padding(

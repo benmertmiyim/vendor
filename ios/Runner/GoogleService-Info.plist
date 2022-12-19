@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>180183630226-5pn9opqgmg4njr966g3ka69jo7irr0pe.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.180183630226-5pn9opqgmg4njr966g3ka69jo7irr0pe</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>180183630226-vrmsmrp8ti8j9qbj96qmvl0df602o1uh.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCVGaC4Qr3YDWSXLBPsFxW9LDsOidYxZ5U</string>
+	<key>GCM_SENDER_ID</key>
+	<string>180183630226</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>app.otoparkbul.vendor</string>
+	<key>PROJECT_ID</key>
+	<string>otoparkbul-yu</string>
+	<key>STORAGE_BUCKET</key>
+	<string>otoparkbul-yu.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:180183630226:ios:b0cda87c76c3988cb9c14b</string>
+</dict>
+</plist>

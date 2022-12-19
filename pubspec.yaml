@@ -12,6 +12,7 @@ dependencies:
   get_it: ^7.2.0
   firebase_core: ^2.3.0
   firebase_auth: ^4.1.5
+  flutter_svg: ^1.1.6
   cloud_functions: ^4.0.5
   cloud_firestore: ^4.1.0
   google_nav_bar: ^5.0.6

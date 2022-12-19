@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vendor/core/view/auth_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,20 +13,18 @@ class LoginScreen extends StatelessWidget {
     String password = "";
 
     return Scaffold(
-      backgroundColor: const Color(0xffF7EBE1),
       body: Form(
         key: formKey,
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 32),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32),
                   child: Center(
-                    child: Text(
-                      'ParkIn LOGO',
-                      style:
-                          TextStyle(fontSize: 33, fontWeight: FontWeight.bold),
+                    child: SvgPicture.asset(
+                      "assets/images/parkin_logo.svg",
+                      width: 250,
                     ),
                   ),
                 ),

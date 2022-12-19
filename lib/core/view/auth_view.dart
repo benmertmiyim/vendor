@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/core/base/auth_base.dart';
 import 'package:vendor/core/model/comment_model.dart';
@@ -23,7 +26,8 @@ class AuthView with ChangeNotifier implements AuthBase {
   AuthService authService = locator<AuthService>();
   VendorModel? vendorModel;
   bool status = false;
-  List<RateModel>? ratingList;
+  List<RateModel> ratingList = [];
+  StreamSubscription? rateListener;
 
   AuthProcess get authProcess => _authProcess;
 
@@ -101,10 +105,10 @@ class AuthView with ChangeNotifier implements AuthBase {
   @override
   Future signOut() async {
     try {
-      authProcess = AuthProcess.busy;
       await authService.signOut();
       vendorModel = null;
       authState = AuthState.signIn;
+      rateListener!.cancel();
       debugPrint(
         "AuthView - signOut : $vendorModel",
       );
@@ -112,8 +116,6 @@ class AuthView with ChangeNotifier implements AuthBase {
       debugPrint(
         "AuthView - Exception - signOut : ${e.toString()}",
       );
-    } finally {
-      authProcess = AuthProcess.idle;
     }
     return vendorModel;
   }
@@ -197,17 +199,17 @@ class AuthView with ChangeNotifier implements AuthBase {
   }
 
   @override
-  Future<List<RateModel>?> getComments() async {
-    try {
-      authProcess = AuthProcess.busy;
-      ratingList = await authService.getComments();
-    } catch (e) {
-      debugPrint(
-        "NotificationView - Exception - getComments : ${e.toString()}",
-      );
-    } finally {
-      authProcess = AuthProcess.idle;
-    }
-    return ratingList;
+  Stream<QuerySnapshot<Object?>> getComments()  {
+    var querySnapshot = authService.getComments();
+    rateListener = querySnapshot.listen((event) {
+      ratingList = [];
+
+      for (var doc in event.docs) {
+        Map<String, dynamic> map = doc.data() as Map<String, dynamic>;
+        ratingList.add(RateModel.fromJson(map));
+      }
+      notifyListeners();
+    });
+    return querySnapshot;
   }
 }
